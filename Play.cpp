@@ -1,12 +1,14 @@
 #include "Play.h"
 #include <stdlib.h>    
 #include <time.h>   
+#include <iostream>
 
-
-Play::Play(int status_type, RenderWindow & window,Font & font):Status(status_type,window,font)
+Play::Play(int status_type, RenderWindow & window,std::string window_title,Font & font):
+Status(status_type,window,window_title,font)
 {
    srand (time(NULL));  
 }
+
 
 
 void Play::init()
@@ -65,7 +67,7 @@ int Play::getEvents(Event & event)
                 timeSinceLastUpdate -= TimePerFrame;
 
   			    if(!snake.exist())
-                   return Game::END;
+                   return Game::GAME_OVER;
 
                 update();
                 
@@ -74,12 +76,14 @@ int Play::getEvents(Event & event)
            render();
       
         }
+
+
 }
 
 
 void Play::render()
 {
-	pnt_window->clear();
+	pnt_window->clear(Color(255,232,143,55));
  	snake.Render(*pnt_window);
  	food.draw(*pnt_window);
 	pnt_window->display();

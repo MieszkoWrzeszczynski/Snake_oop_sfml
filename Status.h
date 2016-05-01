@@ -6,7 +6,7 @@ using namespace sf;
 class Status
 {
 	 public:
-	 	Status(int id, RenderWindow & window,Font& font);
+	 	Status(int id, RenderWindow & window,std::string window_title,Font & font);
 	 	int getStatusType();
 	 	virtual void init() = 0;
 	 	virtual void render() = 0;
@@ -15,6 +15,7 @@ class Status
 
 	 protected:
 	 	RenderWindow * pnt_window;
+	 	std::string title;
 	 	Font * pnt_font;
 	 	int  type;
 };

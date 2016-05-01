@@ -5,7 +5,7 @@ using namespace std;
 
 Food::Food()
 {
-	body.setFillColor(Color(255, 255, 255, 255));
+	body.setFillColor(Color(178,30,0, 255));
 	body.setSize(Vector2f(20, 20));
 	body.setPosition(500,400);
 }

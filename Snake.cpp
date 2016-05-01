@@ -6,7 +6,7 @@ Snake::Snake()
 {
 	RectangleShape head;
 
-	head.setFillColor(Color(255, 0, 255, 255));
+	head.setFillColor(Color(255,138,0, 255));
 	head.setSize(Vector2f(20, 20));
 	head.setPosition(300,300);
 
@@ -107,6 +107,7 @@ void Snake::AddBodyPart()
 	RectangleShape bodyPart;
 	bodyPart.setOutlineThickness(-2.f);
 	bodyPart.setSize(Vector2f(20,20));
+	bodyPart.setFillColor(Color(255,138,0, 255));
 	bodyPart.setPosition(offset);
 
 	snake_body.push_back(bodyPart);

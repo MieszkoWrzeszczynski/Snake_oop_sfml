@@ -5,11 +5,13 @@
 #include "Food.h"
 #include <SFML/Audio.hpp>
 
-class Play  : public Status
+using namespace sf;
+
+class Play : public Status
 {
 
 	public:
-		Play(int status_type, RenderWindow & window,Font & font);
+		Play(int id, RenderWindow & window,std::string window_title,Font & font);
  		void init();
 
 	private:

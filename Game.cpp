@@ -1,13 +1,15 @@
 #include "Game.h"
 #include "Menu.h"
 #include "Play.h"
+//#include "GameOver.h"
 #include <iostream>
 using namespace sf;
 
 
 Game::Game()
 {
-    window.create(VideoMode(SCRN_WIDTH, SCRN_HEIGHT), "Snake", Style::Close);
+   
+    window.create(VideoMode(SCRN_WIDTH, SCRN_HEIGHT), "Snake");
     window.setFramerateLimit(60);
     Vector2i window_position = Vector2i(0,0);
     window.setPosition(window_position);       
@@ -23,7 +25,7 @@ Game::Game()
 
 void Game::start()
 {
-    game_status = new Menu(MENU, window,font);
+    game_status = new Menu(MENU, window,"Snake",font);
     game_status->init();
 
     while(actualGame_status != END)
@@ -35,7 +37,7 @@ void Game::start()
          handleState();
 
     }
-    
+
     window.close();
 }
 
@@ -44,11 +46,15 @@ void Game::changeActualGame_status()
     switch (actualGame_status)
     {
         case MENU:
-            game_status = new Menu(MENU, window, font);
+            game_status = new Menu(MENU, window, "Menu",font);
             break;
 
         case RUN:
-            game_status = new Play(MENU, window, font);
+            game_status = new Play(MENU, window, "Play mode",font);
+            break;
+
+        case GAME_OVER:
+            game_status = new Menu(MENU, window, "Game over",font);
             break;
     }
     

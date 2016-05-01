@@ -21,7 +21,7 @@ class Game
 	public:
 	 	Game();
 	 	void start();
-	 	enum  { MENU,RUN, PAUSED, END, GAVE_OVER };
+	 	enum  { MENU,RUN, PAUSED, END, GAME_OVER };
 	 	static const int SCRN_WIDTH = 1280;
 		static const int SCRN_HEIGHT = 568;
 
