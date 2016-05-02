@@ -2,17 +2,26 @@
 #include "Game.h"
 #include <iostream>
 
-Snake::Snake()
+Snake::Snake(int size)
 {
+	
+	this->size = size;
 	RectangleShape head;
+	direction = DIR_UP;
 
 	head.setFillColor(Color(255,138,0, 255));
-	head.setSize(Vector2f(20, 20));
+	head.setOutlineThickness(-1.f);
+	head.setSize(Vector2f(size, size));
 	head.setPosition(300,300);
 
 	snake_body.push_back(head);
 
-	direction = DIR_UP;
+}
+
+
+Snake::~Snake()
+{
+	//snake_body.clear();
 }
 
 void Snake::changeDirection(Direction direction)
@@ -104,14 +113,17 @@ void Snake::AddBodyPart()
     Vector2f last_item_position = snake_body.back().getPosition();
 	Vector2f dir = getDirection();
 	Vector2f offset(dir.x * 20, dir.y * 20);
+
 	RectangleShape bodyPart;
-	bodyPart.setOutlineThickness(-2.f);
-	bodyPart.setSize(Vector2f(20,20));
+	
+	bodyPart.setOutlineThickness(-1.f);
+	bodyPart.setSize(Vector2f(size,size));
 	bodyPart.setFillColor(Color(255,138,0, 255));
 	bodyPart.setPosition(offset);
 
 	snake_body.push_back(bodyPart);
 }
+
 
 
 Vector2f Snake::GetHeadPosition()
@@ -158,9 +170,6 @@ bool Snake::contains(const Vector2f& position)
 	{
 		if (snake_body[i].getPosition() == position)
 		{
-			
-			//debug
-			cout<<" we wezu"<<endl;
 			return true;
 		}
 	}

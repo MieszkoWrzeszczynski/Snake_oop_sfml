@@ -2,18 +2,55 @@
 #include <stdlib.h>    
 #include <time.h>   
 #include <iostream>
+#include <cstdio>
 
 Play::Play(int status_type, RenderWindow & window,std::string window_title,Font & font):
 Status(status_type,window,window_title,font)
 {
-   srand (time(NULL));  
+    srand (time(NULL));  
+
+    score = 0;
+
+    string tmp; 
+    sprintf((char*)tmp.c_str(), "%d", score);
+    string str_score = tmp.c_str();
+
+    score_counter.setString(str_score);
+    score_counter.setFont(*pnt_font);
+    score_counter.setCharacterSize(86);
+    score_counter.setColor(Color(255,255,255,255));
+    score_counter.setStyle(Text::Bold);
+ 
+    score_counter.setPosition(Game::SCRN_WIDTH/2-score_counter.getGlobalBounds().width/2,40);
+
+
+    buffer.loadFromFile("data/eat.wav");      
+    sound.setBuffer(buffer);
+      
 }
 
+
+Play::~Play()
+{
+    delete snake;
+    delete food;
+
+}
 
 
 void Play::init()
 {
-	
+	snake = new Snake(20);
+    food = new Food(20);
+}
+
+void Play::updateScore()
+{
+    string tmp; 
+    sprintf((char*)tmp.c_str(), "%d", score);
+    string str_score = tmp.c_str();
+    score_counter.setString(str_score);
+ 
 }
 
 int Play::getEvents(Event & event)
@@ -45,16 +82,17 @@ int Play::getEvents(Event & event)
 
                      if(event.key.code == Keyboard::Escape)
                            return  Game::END;
+
                      else if (Keyboard::isKeyPressed( Keyboard::Right ) )
-                         snake.changeDirection(Snake::DIR_RIGHT);
+                         snake->changeDirection(Snake::DIR_RIGHT);
                      else if( Keyboard::isKeyPressed( Keyboard::Right ) )
-                         snake.changeDirection(Snake::DIR_RIGHT);
+                         snake->changeDirection(Snake::DIR_RIGHT);
                      else if( Keyboard::isKeyPressed( Keyboard::Left ) )
-                         snake.changeDirection(Snake::DIR_LEFT);
+                         snake->changeDirection(Snake::DIR_LEFT);
                      else if( Keyboard::isKeyPressed( Keyboard::Down ) ) 
-                         snake.changeDirection(Snake::DIR_DOWN);
+                         snake->changeDirection(Snake::DIR_DOWN);
                      else if( Keyboard::isKeyPressed( Keyboard::Up ) ) 
-                         snake.changeDirection(Snake::DIR_UP);
+                         snake->changeDirection(Snake::DIR_UP);
                       
                     break;
 
@@ -66,11 +104,10 @@ int Play::getEvents(Event & event)
             {
                 timeSinceLastUpdate -= TimePerFrame;
 
-  			    if(!snake.exist())
+  			    if(!snake->exist())
                    return Game::GAME_OVER;
 
-                update();
-                
+                update(); 
             }
 
            render();
@@ -84,28 +121,32 @@ int Play::getEvents(Event & event)
 void Play::render()
 {
 	pnt_window->clear(Color(255,232,143,55));
- 	snake.Render(*pnt_window);
- 	food.draw(*pnt_window);
+ 	snake->Render(*pnt_window);
+ 	food->draw(*pnt_window);
+    pnt_window->draw(score_counter);
 	pnt_window->display();
 }
 
 
 void Play::ifSnakeAteFood()
 {
-	if(food.GetFoodBounds().intersects(snake.GetHeadFloatRect()))
+	if(food->GetFoodBounds().intersects(snake->GetHeadFloatRect()))
 	{
-		snake.AddBodyPart(); 
+		snake->AddBodyPart(); 
 		food_respawn(snake);
+        score++;
+        sound.play();
 	} 
 }
 
 void Play::update()
 {
      ifSnakeAteFood();
-     snake.Move();  
+     snake->Move();  
+     updateScore();
 }
 
-void Play::food_respawn(Snake & snake)
+void Play::food_respawn(Snake * snake)
 {
 
     Vector2f randomPosition;
@@ -115,8 +156,8 @@ void Play::food_respawn(Snake & snake)
 
         randomPosition.y = 100 + (rand() % (int)(Game::SCRN_HEIGHT - 120 + 1));
     
-    }while(snake.contains(randomPosition));
+    }while(snake->contains(randomPosition));
 
 
-    food.set_position(randomPosition);
+    food->set_position(randomPosition);
 }

@@ -6,11 +6,12 @@ using namespace sf;
 using namespace std;
 
 
-class Snake
+class Snake 
 {
 
 public:
-	Snake();
+	Snake(int size);
+	~Snake();
 	enum Direction { DIR_UP, DIR_DOWN, DIR_LEFT , DIR_RIGHT	};
 	Vector2f GetHeadPosition();
 	Vector2f getDirection();
@@ -18,15 +19,17 @@ public:
 	void changeDirection(Direction direction);
 	void draw(RenderTarget & target);
 	void Move();
+	bool contains( const Vector2f& position);
 	void AddBodyPart();
 	void Render(RenderTarget & target);
-	bool hit_the_wall();
 	bool exist();
-	bool eaten();
-	bool contains( const Vector2f& position);
+
 private:
 	vector <sf::RectangleShape> snake_body;
 	Direction direction;
+	bool hit_the_wall();
+	bool eaten();
+	int size;
 
 
 };

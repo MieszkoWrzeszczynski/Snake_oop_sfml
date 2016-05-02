@@ -3,10 +3,10 @@
 
 using namespace std;
 
-Food::Food()
+Food::Food(int food_size)
 {
 	body.setFillColor(Color(178,30,0, 255));
-	body.setSize(Vector2f(20, 20));
+	body.setSize(Vector2f(food_size, food_size));
 	body.setPosition(500,400);
 }
 

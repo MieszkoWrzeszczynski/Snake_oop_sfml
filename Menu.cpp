@@ -41,7 +41,7 @@ void Menu::init()
 		menuOptions[i].setPosition(Game::SCRN_WIDTH/2-menuOptions[i].getGlobalBounds().width/2,250+i*120);
 	}
 
- 
+
 }
 
 
@@ -74,6 +74,7 @@ void Menu::update()
 	{
 		if (menuOptions[i].getGlobalBounds().contains(mousePosition))
 			menuOptions[i].setColor(Color(255,138,0,255));
+			
 		else menuOptions[i].setColor(Color::White);
 	}
 }
@@ -86,7 +87,7 @@ void Menu::render()
 	pnt_window->draw(header);
 
 	for(int i=0;i<2;i++)
-	pnt_window->draw(menuOptions[i]);
+		pnt_window->draw(menuOptions[i]);
 
 	pnt_window->display();
 }

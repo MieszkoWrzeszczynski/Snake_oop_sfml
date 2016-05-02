@@ -1,33 +1,51 @@
 #include "Game.h"
-#include "Menu.h"
-#include "Play.h"
-//#include "GameOver.h"
 #include <iostream>
-using namespace sf;
 
 
 Game::Game()
 {
-   
-    window.create(VideoMode(SCRN_WIDTH, SCRN_HEIGHT), "Snake");
+   ContextSettings settings;
+    settings.antialiasingLevel = 8;
+    window.create(VideoMode(SCRN_WIDTH, SCRN_HEIGHT), "Snake", Style::Close, settings);
     window.setFramerateLimit(60);
     Vector2i window_position = Vector2i(0,0);
-    window.setPosition(window_position);       
+    window.setPosition(window_position);    
+
 
     if (!font.loadFromFile("data/font.ttf"))
     {
         cout<<"Can't load font"<<endl;
         return;
     }
-    
+
+    actualGame_status=MENU;
+    game_status = new Menu(MENU, window,"Snake",font);
+    game_status->init();
+
+
+
+
+
+    music.openFromFile("data/loop.wav");
+    music.setLoop(true);
+    music.setRelativeToListener(true);
+
+
+    music.setVolume(40.f);
+    music.play();
+
+}
+
+Game::~Game()
+{   
+    music.stop();
+    window.close();
 }
 
 
 void Game::start()
 {
-    game_status = new Menu(MENU, window,"Snake",font);
-    game_status->init();
-
+   
     while(actualGame_status != END)
     {
        
@@ -35,16 +53,18 @@ void Game::start()
            changeActualGame_status();
 
          handleState();
-
     }
 
-    window.close();
 }
 
 void Game::changeActualGame_status()
 {
-    switch (actualGame_status)
+
+   delete game_status;
+
+   switch (actualGame_status)
     {
+      
         case MENU:
             game_status = new Menu(MENU, window, "Menu",font);
             break;

@@ -1,11 +1,8 @@
-#include "Status.h"
-#include <vector>
-#include <SFML/Graphics.hpp>
 #pragma once
-
-
-using namespace sf;
-using namespace std;
+#include "Status.h"
+#include "Menu.h"
+#include "Play.h"
+#include <SFML/Audio.hpp>
 
 class Game
 {
@@ -13,6 +10,7 @@ class Game
 		RenderWindow window;
 		Font font;
 		Event event;
+		Music music;
 		Status * game_status;
 		int actualGame_status;
 		void changeActualGame_status();
@@ -20,6 +18,7 @@ class Game
 
 	public:
 	 	Game();
+	 	~Game();
 	 	void start();
 	 	enum  { MENU,RUN, PAUSED, END, GAME_OVER };
 	 	static const int SCRN_WIDTH = 1280;

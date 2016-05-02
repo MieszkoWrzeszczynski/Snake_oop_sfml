@@ -1,7 +1,4 @@
-#include <iostream>
 #include "Game.h"
-
-using namespace sf;
 
 int main()
 {
@@ -10,3 +7,6 @@ int main()
 
     return 0;
 }
+
+//to do 
+//memory leaks

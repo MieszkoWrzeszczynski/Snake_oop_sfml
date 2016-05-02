@@ -12,7 +12,9 @@ class Play : public Status
 
 	public:
 		Play(int id, RenderWindow & window,std::string window_title,Font & font);
+		~Play();
  		void init();
+ 		void updateScore();
 
 	private:
 		void render();
@@ -20,7 +22,11 @@ class Play : public Status
 		void ifSnakeAteFood();
 		void update();
 		void draw();
-		void food_respawn(Snake & snake);
-		Snake snake;
-		Food  food;	
+		int score;
+		Text score_counter;
+		void food_respawn(Snake * snake);
+		Snake  * snake;
+		Food   * food;	
+		SoundBuffer buffer;
+		Sound sound;
 };
