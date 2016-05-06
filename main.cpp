@@ -9,4 +9,4 @@ int main()
 }
 
 //to do 
-//memory leaks
+//player ranks loaded from file and saved the best score to file

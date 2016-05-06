@@ -10,7 +10,7 @@ class Snake
 {
 
 public:
-	Snake(int size);
+	Snake(int size,Vector2f respawn_position);
 	~Snake();
 	enum Direction { DIR_UP, DIR_DOWN, DIR_LEFT , DIR_RIGHT	};
 	Vector2f GetHeadPosition();

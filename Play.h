@@ -15,15 +15,18 @@ class Play : public Status
 		~Play();
  		void init();
  		void updateScore();
+ 		Vector2f getRandomPosition();
 
 	private:
 		void render();
+		int fraps;
 		int  getEvents(Event & event);
 		void ifSnakeAteFood();
 		void update();
 		void draw();
+		void levelUp();
 		int score;
-		Text score_counter;
+		Text score_gui;
 		void food_respawn(Snake * snake);
 		Snake  * snake;
 		Food   * food;	

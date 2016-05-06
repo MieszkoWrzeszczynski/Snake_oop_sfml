@@ -3,11 +3,11 @@
 
 using namespace std;
 
-Food::Food(int food_size)
+Food::Food(int food_size,Vector2f respawn_position)
 {
 	body.setFillColor(Color(178,30,0, 255));
 	body.setSize(Vector2f(food_size, food_size));
-	body.setPosition(500,400);
+	body.setPosition(respawn_position);
 }
 
 void Food::set_position(Vector2f new_position)

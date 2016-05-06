@@ -2,7 +2,7 @@
 #include "Game.h"
 #include <iostream>
 
-Snake::Snake(int size)
+Snake::Snake(int size,Vector2f respawn_position)
 {
 	
 	this->size = size;
@@ -12,7 +12,7 @@ Snake::Snake(int size)
 	head.setFillColor(Color(255,138,0, 255));
 	head.setOutlineThickness(-1.f);
 	head.setSize(Vector2f(size, size));
-	head.setPosition(300,300);
+	head.setPosition(respawn_position);
 
 	snake_body.push_back(head);
 
@@ -21,7 +21,7 @@ Snake::Snake(int size)
 
 Snake::~Snake()
 {
-	//snake_body.clear();
+	snake_body.clear();
 }
 
 void Snake::changeDirection(Direction direction)

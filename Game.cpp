@@ -4,7 +4,7 @@
 
 Game::Game()
 {
-   ContextSettings settings;
+    ContextSettings settings;
     settings.antialiasingLevel = 8;
     window.create(VideoMode(SCRN_WIDTH, SCRN_HEIGHT), "Snake", Style::Close, settings);
     window.setFramerateLimit(60);
@@ -22,14 +22,9 @@ Game::Game()
     game_status = new Menu(MENU, window,"Snake",font);
     game_status->init();
 
-
-
-
-
     music.openFromFile("data/loop.wav");
     music.setLoop(true);
     music.setRelativeToListener(true);
-
 
     music.setVolume(40.f);
     music.play();

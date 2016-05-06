@@ -9,7 +9,7 @@ class Food
 		RectangleShape body;
 
 	public:
-		Food(int food_size);
+		Food(int food_size,Vector2f respawn_position);
 		void set_position(Vector2f new_position);
 		Vector2f get_position();
 		void draw(RenderTarget & target);
