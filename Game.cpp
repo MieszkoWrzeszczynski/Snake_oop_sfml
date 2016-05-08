@@ -1,9 +1,12 @@
 #include "Game.h"
 #include <iostream>
+#include <string>
 
+string  Game::playerName = "";
 
 Game::Game()
 {
+    
     ContextSettings settings;
     settings.antialiasingLevel = 8;
     window.create(VideoMode(SCRN_WIDTH, SCRN_HEIGHT), "Snake", Style::Close, settings);
@@ -35,6 +38,17 @@ Game::~Game()
 {   
     music.stop();
     window.close();
+}
+
+void Game::setPlayerName(string new_playerName)
+{
+    new_playerName.erase(0,1);
+    Game::playerName = new_playerName;
+}
+
+string Game::getPlayerName()
+{
+    return playerName;
 }
 
 

@@ -3,6 +3,7 @@
 #include "Snake.h"
 #include "Game.h"
 #include "Food.h"
+#include "Ranking.h"
 #include <SFML/Audio.hpp>
 
 using namespace sf;
@@ -19,7 +20,9 @@ class Play : public Status
 
 	private:
 		void render();
+		void checkScoreInRank();
 		int fraps;
+		bool paused;
 		int  getEvents(Event & event);
 		void ifSnakeAteFood();
 		void update();
@@ -32,4 +35,5 @@ class Play : public Status
 		Food   * food;	
 		SoundBuffer buffer;
 		Sound sound;
+		Ranking rank;
 };

@@ -1,12 +1,17 @@
 #include "Game.h"
 
-int main()
+int main(int argc, char * argv[])
 {
-    Game game;
+    string playerName;
+
+	if (argc == 2)
+		 playerName = argv[1];
+	else
+		playerName = "unnamed";
+
+	Game game;
+	game.setPlayerName(playerName);
     game.start();
 
     return 0;
 }
-
-//to do 
-//player ranks loaded from file and saved the best score to file

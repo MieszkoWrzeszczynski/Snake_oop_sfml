@@ -4,7 +4,6 @@
 
 Snake::Snake(int size,Vector2f respawn_position)
 {
-	
 	this->size = size;
 	RectangleShape head;
 	direction = DIR_UP;
@@ -15,7 +14,6 @@ Snake::Snake(int size,Vector2f respawn_position)
 	head.setPosition(respawn_position);
 
 	snake_body.push_back(head);
-
 }
 
 

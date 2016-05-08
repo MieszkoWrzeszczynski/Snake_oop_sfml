@@ -12,6 +12,7 @@ class Game
 		Event event;
 		Music music;
 		Status * game_status;
+		static string playerName;
 		int actualGame_status;
 		void changeActualGame_status();
 		void handleState();
@@ -20,6 +21,8 @@ class Game
 	 	Game();
 	 	~Game();
 	 	void start();
+	 	void setPlayerName(string playerName);
+	 	static string getPlayerName();
 	 	enum  { MENU,RUN, PAUSED, END, GAME_OVER };
 	 	static const int SCRN_WIDTH = 1280;
 		static const int SCRN_HEIGHT = 568;
