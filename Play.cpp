@@ -1,10 +1,7 @@
 #include "Play.h"
 #include <stdlib.h>    
-#include <time.h>   
-#include <iostream>
-#include <cstdio>
-#include "Ranking.h"
-
+#include <time.h>  
+#include <cstdio> 
 
 Play::Play(int status_type, RenderWindow & window,std::string window_title,Font & font):
 Status(status_type,window,window_title,font),score(0),fraps(12),paused(false)
@@ -15,13 +12,12 @@ Status(status_type,window,window_title,font),score(0),fraps(12),paused(false)
     sprintf((char*)tmp.c_str(), "%d", score);
     string str_score =  tmp.c_str();
 
-    score_gui.setString(str_score);
-    score_gui.setFont(*pnt_font);
-    score_gui.setCharacterSize(86);
-    score_gui.setColor(Color(255,255,255,255));
-    score_gui.setStyle(Text::Bold);
- 
-    score_gui.setPosition(Game::SCRN_WIDTH/2-4*score_gui.getGlobalBounds().width,40);
+    title.setString(str_score);
+    title.setFont(*pnt_font);
+    title.setCharacterSize(86);
+    title.setColor(Color(255,255,255,255));
+    title.setStyle(Text::Bold);
+    title.setPosition(Game::SCRN_WIDTH/2-3*title.getGlobalBounds().width,40);
 
     buffer.loadFromFile("data/eat.wav");      
     sound.setBuffer(buffer);     
@@ -40,7 +36,6 @@ Play::~Play()
 {
     delete snake;
     delete food;
-
 }
 
 
@@ -55,12 +50,11 @@ void Play::updateScore()
     string tmp; 
     sprintf((char*)tmp.c_str(), "%d", score);
     string str_score = tmp.c_str();
-    score_gui.setString("Poziom " + str_score); 
+    title.setString("Poziom " + str_score); 
 }
 
 int Play::getEvents(Event & event)
 {
-	
     Time TimePerFrame = seconds(1.f / fraps);
     Clock clock;
     Time timeSinceLastUpdate = Time::Zero;
@@ -75,21 +69,18 @@ int Play::getEvents(Event & event)
     
         while (pnt_window->pollEvent(event))
         {
-        
              switch(event.type)
              {
 
                 case Event::KeyPressed:
 
-                     if(event.key.code == Keyboard::Escape)
-                     {
-                  
-                        checkScoreInRank();
-                              rank.saveToRanking(Game::getPlayerName(),score);
-                        return  Game::END;
-                     }
+                    if(event.key.code == Keyboard::Escape)
+                    {
+                      checkScoreInRank();
+                      rank.saveToRanking(Game::getPlayerName(),score);
+                      return  Game::END;
+                    }
                           
-
                     else if (Keyboard::isKeyPressed( Keyboard::Right ) )
                         snake->changeDirection(Snake::DIR_RIGHT);
                     else if( Keyboard::isKeyPressed( Keyboard::Right ) )
@@ -101,7 +92,11 @@ int Play::getEvents(Event & event)
                     else if( Keyboard::isKeyPressed( Keyboard::Up ) ) 
                         snake->changeDirection(Snake::DIR_UP);
                     if ( Keyboard::isKeyPressed( Keyboard::P ) &&  !paused) 
+                    {
+                        title.setString("Pauza");
                         paused = true;
+                    }
+                     
                     else if ( Keyboard::isKeyPressed( Keyboard::P ) &&  paused) 
                         paused = false;
          
@@ -113,18 +108,17 @@ int Play::getEvents(Event & event)
 
         while (timeSinceLastUpdate > TimePerFrame)
         {
-            timeSinceLastUpdate -= TimePerFrame;
+          timeSinceLastUpdate -= TimePerFrame;
 
 			    if(!snake->exist())
-                {
-                  
-                    checkScoreInRank();
-                      rank.saveToRanking(Game::getPlayerName(),score);
-                    return Game::GAME_OVER;
-                }
+          {
+              checkScoreInRank();
+              rank.saveToRanking(Game::getPlayerName(),score);
+              return Game::GAME_OVER;
+          }
                
 
-            if(!paused)
+          if(!paused)
             update(); 
         }
 
@@ -136,8 +130,8 @@ int Play::getEvents(Event & event)
 void Play::render()
 {
 	pnt_window->clear(Color(255,232,143,55));
-    pnt_window->draw(score_gui);
-    snake->Render(*pnt_window);
+  pnt_window->draw(title);
+  snake->Render(*pnt_window);
  	food->draw(*pnt_window);
 	pnt_window->display();
 }
@@ -148,9 +142,9 @@ void Play::ifSnakeAteFood()
 	if(food->GetFoodBounds().intersects(snake->GetHeadFloatRect()))
 	{
 		snake->AddBodyPart(); 
-		food_respawn(snake);
-        levelUp();
-        sound.play();
+		food_respawn();
+    levelUp();
+    sound.play();
 	} 
 }
 
@@ -161,7 +155,7 @@ void Play::update()
      updateScore();
 }
 
-void Play::food_respawn(Snake * snake)
+void Play::food_respawn()
 {
     Vector2f randomPosition;
    
@@ -169,8 +163,7 @@ void Play::food_respawn(Snake * snake)
     {
        randomPosition = getRandomPosition(); 
        
-    }while(snake->contains(randomPosition));
-
+    }while(snake->contains(food));
 
     food->set_position(randomPosition);
 }
@@ -194,9 +187,9 @@ void Play::checkScoreInRank()
     if(best_score < score)
     {
        pnt_window->clear(Color(178,30,0,255));
-       score_gui.setPosition(Game::SCRN_WIDTH/2-1.5*score_gui.getGlobalBounds().width,40);
-       score_gui.setString(Game::getPlayerName() + " masz nowy record!"); 
-       pnt_window->draw(score_gui);
+       title.setPosition(Game::SCRN_WIDTH/2-1.5*title.getGlobalBounds().width,40);
+       title.setString(Game::getPlayerName() + " masz nowy record!"); 
+       pnt_window->draw(title);
        pnt_window->display();
        sleep(seconds(2));
     }

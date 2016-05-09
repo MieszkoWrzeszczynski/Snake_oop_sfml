@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Status.h"
 #include "Snake.h"
 #include "Game.h"
@@ -12,27 +13,30 @@ class Play : public Status
 {
 
 	public:
-		Play(int id, RenderWindow & window,std::string window_title,Font & font);
+		Play(int status_type, RenderWindow & window,std::string window_title,Font & font);
 		~Play();
  		void init();
- 		void updateScore();
- 		Vector2f getRandomPosition();
-
+ 		
 	private:
-		void render();
-		void checkScoreInRank();
+		int score;
 		int fraps;
 		bool paused;
+
+		Vector2f getRandomPosition();
 		int  getEvents(Event & event);
+
+		void checkScoreInRank();
+		void updateScore();
 		void ifSnakeAteFood();
 		void update();
 		void draw();
+		void render();
 		void levelUp();
-		int score;
-		Text score_gui;
-		void food_respawn(Snake * snake);
-		Snake  * snake;
-		Food   * food;	
+		void food_respawn();
+	
+		Text title;
+		Snake * snake;
+		Food  * food;	
 		SoundBuffer buffer;
 		Sound sound;
 		Ranking rank;

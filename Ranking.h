@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -17,5 +18,5 @@ class Ranking
 	private:
 		multimap <int,string> user;
 		multimap <int,string>::iterator it;
-		static string db_name;
+	    const string DB_NAME; 
 };

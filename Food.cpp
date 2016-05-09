@@ -1,7 +1,4 @@
 #include "Food.h"
-#include <iostream>
-
-using namespace std;
 
 Food::Food(int food_size,Vector2f respawn_position)
 {

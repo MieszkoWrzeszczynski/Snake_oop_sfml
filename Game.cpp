@@ -1,6 +1,4 @@
 #include "Game.h"
-#include <iostream>
-#include <string>
 
 string  Game::playerName = "";
 
@@ -42,7 +40,6 @@ Game::~Game()
 
 void Game::setPlayerName(string new_playerName)
 {
-    new_playerName.erase(0,1);
     Game::playerName = new_playerName;
 }
 
@@ -61,7 +58,7 @@ void Game::start()
         if(actualGame_status != game_status->getStatusType())
            changeActualGame_status();
 
-         handleState();
+        handleState();
     }
 
 }
@@ -73,18 +70,17 @@ void Game::changeActualGame_status()
 
    switch (actualGame_status)
     {
-      
         case MENU:
             game_status = new Menu(MENU, window, "Menu",font);
-            break;
+        break;
 
         case RUN:
             game_status = new Play(MENU, window, "Play mode",font);
-            break;
+        break;
 
         case GAME_OVER:
             game_status = new Menu(MENU, window, "Game over",font);
-            break;
+        break;
     }
     
     game_status->init();

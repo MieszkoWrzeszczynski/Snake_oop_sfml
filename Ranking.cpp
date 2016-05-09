@@ -1,19 +1,16 @@
 #include "Ranking.h"
 
-string Ranking::db_name = "ranking.csv";
-
-Ranking::Ranking()
+Ranking::Ranking():DB_NAME("ranking.csv")
 {
 	getRankingFromFile();
 }
 
 void Ranking::getRankingFromFile()
 {
-
 	string user_name;
 	int score;
 
-	ifstream db(db_name);
+	ifstream db(DB_NAME);
 
     while (db >> score >> user_name)
         user.insert ( pair <int,string> (score,user_name) );
@@ -26,10 +23,10 @@ void Ranking::saveToRanking(string playerName, int playerScore)
 {
 	user.insert ( pair <int,string> (playerScore,playerName) );
 
-	ofstream db(db_name);
+	ofstream db(DB_NAME);
 
-	for (it=user.begin(); it!=user.end(); ++it)
-   		 db << (*it).first << '\t' << (*it).second << '\n';
+	for (it = user.begin(); it != user.end(); ++it)
+   		 db << it->first << '\t' << it->second << '\n';
 
 	db.close();
 }

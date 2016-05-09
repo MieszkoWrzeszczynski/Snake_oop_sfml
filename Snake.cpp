@@ -2,7 +2,7 @@
 #include "Game.h"
 #include <iostream>
 
-Snake::Snake(int size,Vector2f respawn_position)
+Snake::Snake(int size,Vector2f spawn_position)
 {
 	this->size = size;
 	RectangleShape head;
@@ -11,7 +11,7 @@ Snake::Snake(int size,Vector2f respawn_position)
 	head.setFillColor(Color(255,138,0, 255));
 	head.setOutlineThickness(-1.f);
 	head.setSize(Vector2f(size, size));
-	head.setPosition(respawn_position);
+	head.setPosition(spawn_position);
 
 	snake_body.push_back(head);
 }
@@ -69,20 +69,11 @@ Vector2f Snake::getDirection()
 
 void Snake::Render(RenderTarget & target)
 {
-    Snake::draw(target);	
-}
-
-
-void Snake::draw(RenderTarget & target)
-{
-
-	for (int i = 0; i < snake_body.size(); i++)
+   for (int i = 0; i < snake_body.size(); i++)
 	{
 		target.draw(snake_body[i]);
 	}
-
 }
-
 
 void Snake::Move()
 {
@@ -133,7 +124,7 @@ bool Snake::hit_the_wall()
 {
 	if(snake_body[0].getPosition().x >= Game::SCRN_WIDTH -20 || 
 	   snake_body[0].getPosition().x <= 0  ||
-	   snake_body[0].getPosition().y <=  0  ||
+	   snake_body[0].getPosition().y <= 0  ||
 	   snake_body[0].getPosition().y >= Game::SCRN_HEIGHT - 20 )
 		return true;
 	else
@@ -141,11 +132,11 @@ bool Snake::hit_the_wall()
 
 }
 
-bool Snake::eaten()
+bool Snake::selfEaten()
 {
 		Vector2f head_position = snake_body[0].getPosition();
 
-		for(int i = 2; i <= snake_body.size() ; i++)
+		for(int i = 1; i <= snake_body.size() ; i++)
 		{
 			if(snake_body[i].getPosition() == head_position)
 				return true;
@@ -156,20 +147,19 @@ bool Snake::eaten()
 
 bool Snake::exist()
 {
-	if(hit_the_wall() || eaten())
+	if(hit_the_wall() || selfEaten())
 		return false;
 
 	return true;
 }
 
-bool Snake::contains(const Vector2f& position)
+bool Snake::contains(Food * food)
 {
-	for (unsigned int i = 0; i <= snake_body.size(); i++)
+	for (int i = 1; i <= snake_body.size(); i++)
 	{
-		if (snake_body[i].getPosition() == position)
-		{
+		if (snake_body[i].getGlobalBounds().intersects(food->GetFoodBounds()))
 			return true;
-		}
 	}
+	
 	return false;
 }
