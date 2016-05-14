@@ -6,6 +6,7 @@ ExtraFood::ExtraFood(int food_size,Vector2f respawn_position)
 	extraFoodBody.setFillColor(current_color);
 	extraFoodBody.setRadius(food_size);
 	extraFoodBody.setPosition(respawn_position);
+	extraFoodBody.setOutlineThickness(-1.f);
 }
 
 void ExtraFood::draw(RenderTarget & target)
