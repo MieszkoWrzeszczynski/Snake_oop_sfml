@@ -20,8 +20,26 @@ Status(status_type,window,window_title,font),score(0),fraps(12),paused(false)
     title.setPosition(Game::SCRN_WIDTH/2-3*title.getGlobalBounds().width,40);
 
     buffer.loadFromFile("data/eat.wav");      
-    sound.setBuffer(buffer);     
+    sound.setBuffer(buffer);    
+}
 
+void Play::loadFood()
+{
+    for( int i = 0; i < FOOD_AMOUNT ; i++)
+    {
+      if( i % 2)
+        tab[i] = new ExtraFood(20,getRandomPosition());
+      else
+        tab[i] = new Food(20,getRandomPosition());
+    }
+}
+
+void Play::drawFood()
+{
+    for( int i = 0; i < FOOD_AMOUNT; i++)
+    {
+      tab[i]->draw(*pnt_window);
+    }
 }
 
 void Play::levelUp()
@@ -35,14 +53,18 @@ void Play::levelUp()
 Play::~Play()
 {
     delete snake;
-    delete food;
+
+    for (int i = 0; i < FOOD_AMOUNT; ++i)
+    {
+      delete[] tab[i];
+    }
 }
 
 
 void Play::init()
 {
     snake = new Snake(20,getRandomPosition());
-    food = new Food(20,getRandomPosition());
+    loadFood();
 }
 
 void Play::updateScore()
@@ -132,40 +154,47 @@ void Play::render()
 	pnt_window->clear(Color(255,232,143,55));
   pnt_window->draw(title);
   snake->Render(*pnt_window);
- 	food->draw(*pnt_window);
+  drawFood();
 	pnt_window->display();
 }
 
 
 void Play::ifSnakeAteFood()
 {
-	if(food->GetFoodBounds().intersects(snake->GetHeadFloatRect()))
-	{
-		snake->AddBodyPart(); 
-		food_respawn();
-    levelUp();
-    sound.play();
-	} 
+  	for( int i = 0; i < FOOD_AMOUNT; i++)
+    {
+        if(tab[i]->GetFoodBounds().intersects(snake->GetHeadFloatRect()))
+        {
+          sound.play();
+          snake->AddBodyPart(tab[i]->getCurrentColor()); 
+          food_respawn(tab[i]);
+          levelUp();
+        }
+    } 
 }
 
 void Play::update()
 {
      ifSnakeAteFood();
-     snake->Move();  
      updateScore();
+     snake->Move();  
+    
 }
 
-void Play::food_respawn()
+void Play::food_respawn(Food * food)
 {
     Vector2f randomPosition;
-   
+  
     do
     {
-       randomPosition = getRandomPosition(); 
-       
+      randomPosition = getRandomPosition(); 
+      food->respawn(randomPosition);
+
     }while(snake->contains(food));
 
-    food->set_position(randomPosition);
+
+
+   
 }
 
 

@@ -70,16 +70,16 @@ Vector2f Snake::getDirection()
 void Snake::Render(RenderTarget & target)
 {
    for (int i = 0; i < snake_body.size(); i++)
-	{
+   {
 		target.draw(snake_body[i]);
-	}
+   }
 }
 
 void Snake::Move()
 {
 	Vector2f prevPos = snake_body[0].getPosition();
 	Vector2f dir = getDirection();
-	Vector2f offset(dir.x * 20, dir.y * 20);
+	Vector2f offset(dir.x * size, dir.y * size);
 	snake_body[0].move(offset);
 
 	for ( int i = 1; i < snake_body.size(); i++)
@@ -96,23 +96,21 @@ FloatRect Snake::GetHeadFloatRect() const
 }
 
 
-void Snake::AddBodyPart()
+void Snake::AddBodyPart(Color new_color)
 {
-	
+	RectangleShape bodyPart;
+
     Vector2f last_item_position = snake_body.back().getPosition();
 	Vector2f dir = getDirection();
-	Vector2f offset(dir.x * 20, dir.y * 20);
+	Vector2f offset(dir.x * size, dir.y * size);
 
-	RectangleShape bodyPart;
-	
 	bodyPart.setOutlineThickness(-1.f);
 	bodyPart.setSize(Vector2f(size,size));
-	bodyPart.setFillColor(Color(255,138,0, 255));
+	bodyPart.setFillColor(new_color);
 	bodyPart.setPosition(offset);
 
 	snake_body.push_back(bodyPart);
 }
-
 
 
 Vector2f Snake::GetHeadPosition()
@@ -122,10 +120,10 @@ Vector2f Snake::GetHeadPosition()
 
 bool Snake::hit_the_wall()
 {
-	if(snake_body[0].getPosition().x >= Game::SCRN_WIDTH -20 || 
+	if(snake_body[0].getPosition().x >= Game::SCRN_WIDTH -size || 
 	   snake_body[0].getPosition().x <= 0  ||
 	   snake_body[0].getPosition().y <= 0  ||
-	   snake_body[0].getPosition().y >= Game::SCRN_HEIGHT - 20 )
+	   snake_body[0].getPosition().y >= Game::SCRN_HEIGHT - size )
 		return true;
 	else
 		return false;
@@ -134,15 +132,15 @@ bool Snake::hit_the_wall()
 
 bool Snake::selfEaten()
 {
-		Vector2f head_position = snake_body[0].getPosition();
+	Vector2f head_position = snake_body[0].getPosition();
 
-		for(int i = 1; i <= snake_body.size() ; i++)
-		{
-			if(snake_body[i].getPosition() == head_position)
-				return true;
-		}
+	for(int i = 1; i <= snake_body.size() ; i++)
+	{
+		if(snake_body[i].getPosition() == head_position)
+			return true;
+	}
 
-		return false;
+	return false;
 }
 
 bool Snake::exist()

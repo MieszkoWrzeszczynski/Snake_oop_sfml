@@ -17,7 +17,7 @@ class Snake
 		void Render(RenderTarget & target);
 		void Move();
 		bool contains(Food * food);
-		void AddBodyPart();
+		void AddBodyPart(Color new_color);
 		bool exist();
 
 	private:

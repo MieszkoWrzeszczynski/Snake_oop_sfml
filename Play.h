@@ -4,8 +4,10 @@
 #include "Snake.h"
 #include "Game.h"
 #include "Food.h"
+#include "ExtraFood.h"
 #include "Ranking.h"
 #include <SFML/Audio.hpp>
+#include <vector>
 
 using namespace sf;
 
@@ -21,6 +23,7 @@ class Play : public Status
 		int score;
 		int fraps;
 		bool paused;
+		static const int FOOD_AMOUNT = 5;
 
 		Vector2f getRandomPosition();
 		int  getEvents(Event & event);
@@ -32,11 +35,13 @@ class Play : public Status
 		void draw();
 		void render();
 		void levelUp();
-		void food_respawn();
+		void food_respawn(Food * food);
+		void loadFood();
+		void drawFood();
 	
 		Text title;
 		Snake * snake;
-		Food  * food;	
+		Food * tab[FOOD_AMOUNT];
 		SoundBuffer buffer;
 		Sound sound;
 		Ranking rank;

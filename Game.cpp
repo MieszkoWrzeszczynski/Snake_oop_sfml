@@ -12,7 +12,6 @@ Game::Game()
     Vector2i window_position = Vector2i(0,0);
     window.setPosition(window_position);    
 
-
     if (!font.loadFromFile("data/font.ttf"))
     {
         cout<<"Can't load font"<<endl;
