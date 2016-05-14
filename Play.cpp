@@ -190,11 +190,7 @@ void Play::food_respawn(Food * food)
       randomPosition = getRandomPosition(); 
       food->respawn(randomPosition);
 
-    }while(snake->contains(food));
-
-
-
-   
+    }while(snake->contains(food)); 
 }
 
 
