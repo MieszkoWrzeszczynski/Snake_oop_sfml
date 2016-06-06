@@ -26,7 +26,7 @@ class Play : public Status
 		static const int FOOD_AMOUNT = 5;
 
 		Vector2f getRandomPosition();
-		int  getEvents(Event & event);
+		int  getEvents();
 
 		void checkScoreInRank();
 		void updateScore();

@@ -2,10 +2,7 @@
 #include "Game.h"
 
 Menu::Menu(int status_type, RenderWindow & window,std::string window_title,Font & font)
-:Status(status_type,window,window_title,font)
-{
-
-}
+:Status(status_type,window,window_title,font){}
 
 
 void Menu::init()
@@ -41,9 +38,11 @@ void Menu::init()
 }
 
 
-int Menu::getEvents(Event & event)
+int Menu::getEvents()
 {
 	Vector2f mousePosition = Vector2f((float)Mouse::getPosition(*pnt_window).x, (float)Mouse::getPosition(*pnt_window).y);
+
+	Event event;
 
 	while (pnt_window->pollEvent(event))
 	{

@@ -21,16 +21,6 @@ void ExtraFood::respawn(Vector2f respawn_position)
 	extraFoodBody.setPosition(respawn_position);
 }
 
-void ExtraFood::set_position(Vector2f new_position)
-{
-	extraFoodBody.setPosition(new_position);
-}
-
-Vector2f ExtraFood::get_position()
-{
-	return extraFoodBody.getPosition();
-}
-
 FloatRect ExtraFood::GetFoodBounds()
 {
 	return extraFoodBody.getGlobalBounds();

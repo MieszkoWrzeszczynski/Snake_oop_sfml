@@ -4,7 +4,6 @@ string  Game::playerName = "";
 
 Game::Game()
 {
-    
     ContextSettings settings;
     settings.antialiasingLevel = 8;
     window.create(VideoMode(SCRN_WIDTH, SCRN_HEIGHT), "Snake", Style::Close, settings);
@@ -74,7 +73,7 @@ void Game::changeActualGame_status()
         break;
 
         case RUN:
-            game_status = new Play(MENU, window, "Play mode",font);
+            game_status = new Play(RUN, window, "Play mode",font);
         break;
 
         case GAME_OVER:
@@ -87,7 +86,7 @@ void Game::changeActualGame_status()
 
 void Game::handleState()
 {   
-    actualGame_status = game_status->getEvents(event);
+    actualGame_status = game_status->getEvents();
     game_status->update();
     game_status->render();
 }

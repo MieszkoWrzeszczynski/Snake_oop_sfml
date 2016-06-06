@@ -1,6 +1,5 @@
 #include "Snake.h"
 #include "Game.h"
-#include <iostream>
 
 Snake::Snake(int size,Vector2f spawn_position)
 {
@@ -120,10 +119,10 @@ Vector2f Snake::GetHeadPosition()
 
 bool Snake::hit_the_wall()
 {
-	if(snake_body[0].getPosition().x >= Game::SCRN_WIDTH -size || 
-	   snake_body[0].getPosition().x <= 0  ||
-	   snake_body[0].getPosition().y <= 0  ||
-	   snake_body[0].getPosition().y >= Game::SCRN_HEIGHT - size )
+	if(GetHeadPosition().x >= Game::SCRN_WIDTH - size || 
+	   GetHeadPosition().x <= 0  ||
+	   GetHeadPosition().y <= 0  ||
+	   GetHeadPosition().y >= Game::SCRN_HEIGHT - size )
 		return true;
 	else
 		return false;
@@ -132,11 +131,10 @@ bool Snake::hit_the_wall()
 
 bool Snake::selfEaten()
 {
-	Vector2f head_position = snake_body[0].getPosition();
-
-	for(int i = 1; i <= snake_body.size() ; i++)
+	
+	for(int i = 1; i < snake_body.size() ; i++)
 	{
-		if(snake_body[i].getPosition() == head_position)
+		if (snake_body[i].getGlobalBounds().intersects(GetHeadFloatRect()))
 			return true;
 	}
 
@@ -145,15 +143,12 @@ bool Snake::selfEaten()
 
 bool Snake::exist()
 {
-	if(hit_the_wall() || selfEaten())
-		return false;
-
-	return true;
+    return !(hit_the_wall() || selfEaten());
 }
 
 bool Snake::contains(Food * food)
 {
-	for (int i = 1; i <= snake_body.size(); i++)
+	for (int i = 1; i < snake_body.size(); i++)
 	{
 		if (snake_body[i].getGlobalBounds().intersects(food->GetFoodBounds()))
 			return true;

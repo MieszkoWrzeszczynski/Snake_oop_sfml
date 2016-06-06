@@ -14,5 +14,5 @@ class Menu : public Status
 		Text menuOptions[2];
 		void update();
 		void render();
-		int getEvents(Event & event);
+		int getEvents();
 };

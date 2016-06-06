@@ -1,16 +1,14 @@
 #include "Game.h"
 
+String getPlayerNameFromArgs(int argc, char * argv[])
+{
+	return (argc == 2)  ? argv[1] : "Unnamed";
+}
+
 int main(int argc, char * argv[])
 {
-    string playerName;
-
-	if (argc == 2)
-		 playerName = argv[1];
-	else
-		playerName = "unnamed";
-
 	Game game;
-	game.setPlayerName(playerName);
+	game.setPlayerName(getPlayerNameFromArgs(argc,argv));
     game.start();
 
     return 0;

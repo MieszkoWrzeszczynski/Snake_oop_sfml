@@ -37,9 +37,7 @@ void Play::loadFood()
 void Play::drawFood()
 {
     for( int i = 0; i < FOOD_AMOUNT; i++)
-    {
       tab[i]->draw(*pnt_window);
-    }
 }
 
 void Play::levelUp()
@@ -55,9 +53,7 @@ Play::~Play()
     delete snake;
 
     for (int i = 0; i < FOOD_AMOUNT; ++i)
-    {
       delete[] tab[i];
-    }
 }
 
 
@@ -75,10 +71,13 @@ void Play::updateScore()
     title.setString("Poziom " + str_score); 
 }
 
-int Play::getEvents(Event & event)
+int Play::getEvents()
 {
+    Event event;
+
     Time TimePerFrame = seconds(1.f / fraps);
     Clock clock;
+
     Time timeSinceLastUpdate = Time::Zero;
 
     pnt_window->setMouseCursorVisible(false);
@@ -130,18 +129,18 @@ int Play::getEvents(Event & event)
 
         while (timeSinceLastUpdate > TimePerFrame)
         {
-          timeSinceLastUpdate -= TimePerFrame;
+            timeSinceLastUpdate -= TimePerFrame;
 
-			    if(!snake->exist())
-          {
-              checkScoreInRank();
-              rank.saveToRanking(Game::getPlayerName(),score);
-              return Game::GAME_OVER;
-          }
-               
+  			    if(!snake->exist())
+            {
+                checkScoreInRank();
+                rank.saveToRanking(Game::getPlayerName(),score);
+                return Game::GAME_OVER;
+            }
+                 
 
-          if(!paused)
-            update(); 
+            if(!paused)
+              update(); 
         }
 
       render();
@@ -198,8 +197,8 @@ Vector2f Play::getRandomPosition()
 {
     Vector2f randomPosition;
 
-    randomPosition.x = 100 + (rand() % (int)(Game::SCRN_WIDTH  - 120 + 1));
-    randomPosition.y = 100 + (rand() % (int)(Game::SCRN_HEIGHT - 120 + 1));
+    randomPosition.x = 120 + (rand() % (int)(Game::SCRN_WIDTH  - 150 + 1));
+    randomPosition.y = 120 + (rand() % (int)(Game::SCRN_HEIGHT - 150 + 1));
     
     return randomPosition;
 }

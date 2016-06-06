@@ -11,7 +11,7 @@ class Status
 	 	virtual void init() = 0;
 	 	virtual void render() = 0;
 	 	virtual void update() = 0;
-	 	virtual	int getEvents(Event&) = 0;
+	 	virtual	int getEvents() = 0;
 
 	 protected:
 	 	RenderWindow * pnt_window;
